@@ -5,12 +5,59 @@ using UnityEngine.AI;
 using static UnityEngine.Mathf;
 using System.Linq;
 
+//comment
+
 public class MyLibrary{
+
+    public static float creatureAmount = 10;
+
+    public static float done = 0;
+
+
+    //Set position as edge
+
+    public static void Edge(NavMeshAgent agent, Transform par){
+
+        Vector3 pos;
+        float edge;
+        float edgepos;
+
+        pos.x = 0f;
+           pos.y = 0f;
+           pos.z = 0f;
+
+            edge = Random.Range(1f,5f);
+            edgepos = Random.Range(-13f, 13f);
+
+            if(edge > 4){
+                pos.x = edgepos;
+                pos.z = 13f;
+            }else if(edge > 3){
+                pos.x = 13f;
+                pos.z = edgepos;
+            }else if(edge > 2){
+                pos.x = edgepos;
+                pos.z = -13f;
+            }else if(edge > 1){
+                pos.x = -13f;
+                pos.z = edgepos;
+            }
+
+            pos.y = 0;
+
+
+            agent.transform.position = pos;
+
+            agent.transform.SetParent(par);
+    }
+
 
     //Choose Next Random Destination
 
-     public static float NextDest (UnityEngine.AI.NavMeshAgent agent, float energy){
-         if(energy > 0){
+     public static void NextDest (UnityEngine.AI.NavMeshAgent agent){
+
+         Vector3 lastPos = agent.transform.position;
+        
 
         Vector3 d;
         Vector3 agentpos = agent.transform.position;
@@ -35,13 +82,16 @@ public class MyLibrary{
        
         agent.SetDestination(d);
 
-        energy = energy - 10;
+        
+        ;
 
-         }
 
-        Debug.Log(energy);
+         
 
-        return energy;
+        
+
+        //https://docs.unity3d.com/ScriptReference/Vector3.Distance.html
+         
          
 
        
@@ -53,9 +103,9 @@ public class MyLibrary{
 
     //Check if agent has reached destination
 
-    public static void DestCheck (UnityEngine.AI.NavMeshAgent agent, Vector3 dest, float energy){
+    public static void DestCheck (UnityEngine.AI.NavMeshAgent agent, Vector3 dest){
         if(agent.transform.position == dest){
-            MyLibrary.NextDest(agent, energy);
+            MyLibrary.NextDest(agent);
 
             
         }
@@ -66,7 +116,7 @@ public class MyLibrary{
 
     //Send Home
 
-    public static void Home (UnityEngine.AI.NavMeshAgent agent){
+    public static Vector3 Home (UnityEngine.AI.NavMeshAgent agent){
 
         Vector3 pos = agent.transform.position;
 
@@ -97,13 +147,50 @@ public class MyLibrary{
 
         agent.SetDestination(dest);
 
+        return dest;
+
+
+    }
+
+    //check if all creaturs are done
+
+    public static bool allDone(float amDone, float amAll){
+
+        if(amDone == amAll){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    //check if alive
+
+    public static bool Survive (NavMeshAgent agent, bool home, float food){
+        if(home = true && food >= 1){
+            return true;
+        } else {
+            return false;
+        }
+            
+    }
+
+    public static void Birth (NavMeshAgent agent, Transform parent){
 
     }
 
 
-    //Use Energy
 
-    public void EnegyUse
+    
+
+        
+
+       
+    
+
+     //https://docs.unity3d.com/ScriptReference/Physics.SphereCast.html
 
 
 }
+
+
+//comment

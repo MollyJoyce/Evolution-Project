@@ -17,55 +17,38 @@ public class SpawnScript : MonoBehaviour{
     public GameObject nourishment;
     public NavMeshAgent creature;
 
-    public float foodAmount = 50;
-    public float creatureAmount = 10;
+    public float foodAmount = 30;
+    float crCount = MyLibrary.creatureAmount;
+    //public static float creatureAmount = 10;
 
 
 
 
-    public void CreatureSpawn (UnityEngine.AI.NavMeshAgent agent, float pop){
+    public static void CreatureSpawn (UnityEngine.AI.NavMeshAgent agent, float pop, Transform par){
 
     for (int h = 0; h < pop; h++){
             UnityEngine.AI.NavMeshAgent curcre = Instantiate(agent);
 
-            float edge;
-            float edgepos;
+            Edge(curcre, par);
 
-            edge = Random.Range(1,5);
-            edgepos = Random.Range(-13, 13);
-
-            if(edge == 1){
-                pos = new Vector3(edgepos, 0f, 13f);
-            }else if(edge == 2){
-                pos = new Vector3(13f, 0f, edgepos);
-            }else if(edge == 3){
-                pos = new Vector3(edgepos, 0f, -13f);
-            }else if(edge == 4){
-                pos = new Vector3(-13f, 0f, edgepos);
-            }
-
-
-            curcre.transform.position = pos;
-           
-            curcre.transform.SetParent(crePar);
         }
 }
 
 
-public void FoodSpawn(GameObject food, float amount){
+public void FoodSpawn(GameObject food, float amount, Transform par){
 
     for (int i = 0; i < amount; i++){
             GameObject curfood = Instantiate(food);
 
             Vector3 pos;
 
-            pos.x = Random.Range(-13, 13);
+            pos.x = Random.Range(-11, 11);
             pos.y = .125f;
-            pos.z = Random.Range(-13, 13);
+            pos.z = Random.Range(-11, 11);
 
             curfood.transform.position = pos;
            
-            curfood.transform.SetParent(pointPar);
+            curfood.transform.SetParent(par);
 
             curfood.tag = "Food";
         }
@@ -74,9 +57,9 @@ public void FoodSpawn(GameObject food, float amount){
 
 
     void Start(){
-            FoodSpawn(nourishment, foodAmount);
+            FoodSpawn(nourishment, foodAmount, pointPar);
 
-            CreatureSpawn(creature, creatureAmount);  
+            CreatureSpawn(creature, crCount, crePar);  
 
     }
 
